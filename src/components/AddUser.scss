@@ -1,0 +1,5 @@
+.add-user {
+	&:not(:last-child) {
+		margin-bottom: 20px;
+	}
+}

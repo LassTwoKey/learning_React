@@ -1,0 +1,29 @@
+.input-item {
+	display: block;
+	span {
+		font-size: 18px;
+		font-weight: 500;
+		display: inline-block;
+		margin-bottom: 5px;
+	}
+	input {
+		width: 100%;
+		outline: none;
+		padding: 8px 10px;
+		border-radius: 4px;
+		overflow: hidden;
+		border: 2px solid #bbb;
+		transition: 0.18s ease;
+		font-family: 'Roboto', sans-serif;
+		font-weight: 500;
+		&:hover {
+			border-color: #9c9c9c;
+		}
+		&:focus {
+			border-color: #90007a;
+		}
+	}
+	&:not(:last-child) {
+		margin-bottom: 8px;
+	}
+}
