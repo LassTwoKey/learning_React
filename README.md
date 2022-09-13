@@ -1,3 +1,3 @@
-## Simple react app to add users and form validation to create them
+## Simple React App to add users and form validation to create them
 
 
