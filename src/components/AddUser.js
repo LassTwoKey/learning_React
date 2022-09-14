@@ -1,4 +1,4 @@
-import React, { useState, Fragment, createRef } from 'react';
+import React, { useState, Fragment, useRef } from 'react';
 import ReactDOM from 'react-dom';
 import ContentWhiteBlock from './UI/ContentWhiteBlock';
 import Modal from './UI/Modal';
@@ -13,8 +13,8 @@ function AddUser({ addHandler }) {
 		ageError: 'Please enter a valid age (> 0).'
 	}
 
-	const nameInputRef = createRef();
-	const ageInputRef = createRef();
+	const nameInputRef = useRef();
+	const ageInputRef = useRef();
 
 	const [isUsernameValid, setIsUsernameValid] = useState(true);
 	const [isAgeValid, setIsAgeValid] = useState(true);
