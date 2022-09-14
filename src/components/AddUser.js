@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, Fragment, createRef } from 'react';
+import ReactDOM from 'react-dom';
 import ContentWhiteBlock from './UI/ContentWhiteBlock';
 import Modal from './UI/Modal';
 import Backdrop from './UI/Backdrop';
@@ -11,8 +12,9 @@ function AddUser({ addHandler }) {
 		usernameError: 'Please enter a valid name and age (non-empty values).',
 		ageError: 'Please enter a valid age (> 0).'
 	}
-	const [usernameInput, setUsernameInput] = useState('');
-	const [ageInput, setAgeInput] = useState('');
+
+	const nameInputRef = createRef();
+	const ageInputRef = createRef();
 
 	const [isUsernameValid, setIsUsernameValid] = useState(true);
 	const [isAgeValid, setIsAgeValid] = useState(true);
@@ -40,14 +42,14 @@ function AddUser({ addHandler }) {
 	const submitDataHandler = (e) => {
 		e.preventDefault();
 
-		if (usernameValidaton(usernameInput) && ageValidaton(ageInput)) {
+		if (usernameValidaton(nameInputRef.current.value) && ageValidaton(ageInputRef.current.value)) {
 			const userData = {};
-			userData.username = usernameInput;
-			userData.age = ageInput;
+			userData.username = nameInputRef.current.value;
+			userData.age = ageInputRef.current.value;
 			userData.id = Math.random().toString();
 
-			setUsernameInput('');
-			setAgeInput('');
+			nameInputRef.current.value = '';
+			ageInputRef.current.value = '';
 			addHandler(userData);
 		}
 	}
@@ -59,22 +61,36 @@ function AddUser({ addHandler }) {
 	return (
 		<ContentWhiteBlock className='add-user'>
 			<form onSubmit={submitDataHandler}>
-				<Input inputValue={setUsernameInput} value={usernameInput} type={'text'} labelName={'Username'} />
+				<Input ref={nameInputRef} type={'text'} labelName={'Username'} />
+				<Input ref={ageInputRef} type={'number'} labelName={'Age'} />
+				<Button type='submit'>Add User</Button>
+				{(isUsernameValid && isAgeValid) && <div></div>}
 				{!isUsernameValid && (
-					<>
-						<Backdrop closeModal={closeModalHandler}></Backdrop>
-						<Modal closeModal={closeModalHandler} headerText={'Invalid input'} text={errorValidationText.usernameError} />
-					</>
+					<Fragment>
+						{
+							ReactDOM.createPortal(<Backdrop closeModal={closeModalHandler}></Backdrop>, document.getElementById('root-backdrop'))
+						}
+						{
+							ReactDOM.createPortal(
+								<Modal closeModal={closeModalHandler} headerText={'Invalid input'} text={errorValidationText.usernameError} />,
+								document.getElementById('root-modal')
+							)
+						}
+					</Fragment>
 				)}
 				{!isAgeValid && (
-					<>
-						<Backdrop closeModal={closeModalHandler}></Backdrop>
-						<Modal closeModal={closeModalHandler} headerText={'Invalid input'} text={errorValidationText.ageError} />
-					</>
+					<Fragment>
+						{
+							ReactDOM.createPortal(<Backdrop closeModal={closeModalHandler}></Backdrop>, document.getElementById('root-backdrop'))
+						}
+						{
+							ReactDOM.createPortal(
+								<Modal closeModal={closeModalHandler} headerText={'Invalid input'} text={errorValidationText.ageError} />,
+								document.getElementById('root-modal')
+							)
+						}
+					</Fragment>
 				)}
-				<Input inputValue={setAgeInput} value={ageInput} type={'number'} labelName={'Age'} />
-				<Button>Add User</Button>
-				{(isUsernameValid && isAgeValid) && <div></div>}
 			</form>
 		</ContentWhiteBlock>
 	);

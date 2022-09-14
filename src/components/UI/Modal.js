@@ -12,9 +12,7 @@ function Modal({ headerText, text, closeModal }) {
 			<div className={styles.modal_cont}>
 				<div className={styles.modal_text}>{text}</div>
 				<div className={styles.modal_bottom}>
-					<div onClick={clickButtonHandler}>
-						<Button >Okay</Button>
-					</div>
+					<Button onClick={clickButtonHandler} >Okay</Button>
 				</div>
 			</div>
 		</div>

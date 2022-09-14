@@ -1,16 +1,13 @@
 import React from 'react';
 import "./Input.scss";
 
-function Input({ labelName, type, inputValue, value }) {
-	const getInputHandler = (e) => {
-		inputValue(e.target.value);
-	}
+const Input = React.forwardRef(({ labelName, type }, ref) => {
 	return (
 		<label className='input-item'>
 			<span>{labelName}</span>
-			<input value={value} onChange={getInputHandler} type={type} />
+			<input ref={ref} type={type} />
 		</label>
-	);
-}
+	)
+});
 
 export default Input;
