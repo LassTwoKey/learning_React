@@ -1,0 +1,1 @@
+## Simple React App to adding and removing items to the cart
