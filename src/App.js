@@ -1,20 +1,18 @@
-import React, { useState } from 'react';
-import './App';
-import UsersList from './components/UsersList';
-import AddUser from './components/AddUser';
+import { useSelector } from "react-redux";
+import Counter from "./components/Counter";
+import Header from "./components/Header";
+import Auth from "./components/Auth";
+import UserProfile from "./components/UserProfile";
 
 function App() {
-	const [users, setUsers] = useState([]);
-
-	const onAddUserHandler = (user) => {
-		setUsers(prevUsers => [user, ...prevUsers]);
-	}
-
+	const isAuth = useSelector(state => state.auth.isAuthentication);
 	return (
-		<div className="wrapper">
-			<AddUser users={users} addHandler={onAddUserHandler} />
-			<UsersList users={users} />
-		</div>
+		<>
+			<Header />
+			{!isAuth && <Auth />}
+			{isAuth && <UserProfile />}
+			<Counter />
+		</>
 	);
 }
 
