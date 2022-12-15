@@ -1,0 +1,28 @@
+{
+  "extends": ["react-app", "react-app/jest"],
+  "rules": {
+    "semi": ["warn", "always"],
+    //"arrow-parens": ["warn", "as-needed"],
+    "no-console": "off",
+    //"quotes": ["warn", "double"],
+    // "jsx-quotes": ["warn", "prefer-double"],
+    "prefer-const": "warn",
+    "max-len": ["warn", { "code": 120 }],
+    "comma-dangle": ["warn", "never"],
+    "import/order": [
+      "warn",
+      {
+        "groups": [
+          "builtin",
+          "external",
+          "internal",
+          "parent",
+          "sibling",
+          "index",
+          "object",
+          "type"
+        ]
+      }
+    ]
+  }
+}

@@ -1,20 +1,49 @@
-import React, { useState } from 'react';
-import './App';
-import UsersList from './components/UsersList';
-import AddUser from './components/AddUser';
+import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { sendCartData, fetchCartData } from "./store/actions/cart-actions";
+import Cart from "./components/Cart/Cart";
+import Layout from "./components/Layout/Layout";
+import Products from "./components/Shop/Products";
+import Notification from "./components/UI/Notifiaction";
+
+let isInitial = true;
 
 function App() {
-	const [users, setUsers] = useState([]);
+	const dispatch = useDispatch();
+	const showCart = useSelector(state => state.ui.cartIsVisible);
+	const cart = useSelector(state => state.cart);
+	const notification = useSelector(state => state.ui.notification);
 
-	const onAddUserHandler = (user) => {
-		setUsers(prevUsers => [user, ...prevUsers]);
-	}
+	useEffect(() => {
+		dispatch(fetchCartData());
+	}, [dispatch]);
+
+	useEffect(() => {
+		if (isInitial) {
+			isInitial = false;
+			return;
+		}
+
+		if (cart.changed) {
+			dispatch(sendCartData(cart));
+		}
+
+	}, [cart, dispatch]);
 
 	return (
-		<div className="wrapper">
-			<AddUser users={users} addHandler={onAddUserHandler} />
-			<UsersList users={users} />
-		</div>
+		<>
+			{notification && (
+				<Notification
+					status={notification.status}
+					title={notification.title}
+					message={notification.message}
+				/>
+			)}
+			<Layout>
+				{showCart && <Cart />}
+				<Products />
+			</Layout>
+		</>
 	);
 }
 
