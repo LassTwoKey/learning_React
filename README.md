@@ -1,3 +1,3 @@
-## Simple React App to add users and form validation to create them
+## Simple React App with React Router and HTTP Requests
 
-
+![App preview image](./great-quotes.png)
